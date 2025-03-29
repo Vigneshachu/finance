@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Interest Calculator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url('image/login.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #e65100;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            background-color: #bf360c;
+        }
+        .header {
+            background: url('image/index.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 100.5;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #e65100;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            text-align: center;
+        }
+        .container {
+            background: rgba(190, 230, 233, 0.9);
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #268aee;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(86, 237, 232, 0.5);
+            margin-top: 20px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #1498d5;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        button {
+            background-color: #e39a23;
+            border: 1px solid #da8989;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 10px 15px;
+        }
+        button:hover {
+            background-color: #e6c200;
+        }
+        .details-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff5722;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .details-button:hover {
+            background-color: #e64a19;
+        }
+    </style>
+    <script>
+        function goToDetails() {
+            window.location.href = "save.html";
+        }
+        
+        function calculateInterest() {
+            let amount = parseFloat(document.getElementById("amount").value);
+            let interestRate = parseFloat(document.getElementById("interestRate").value);
+            let fromDate = new Date(document.getElementById("fromDate").value);
+            let toDate = new Date(document.getElementById("toDate").value);
+
+            if (isNaN(amount) || isNaN(interestRate) || !fromDate || !toDate) {
+                document.getElementById("result").innerText = "Please enter valid inputs.";
+                return;
+            }
+
+            let timeDiff = toDate - fromDate;
+            let days = timeDiff / (1000 * 60 * 60 * 24);
+            let years = days / 365;
+
+            if (days <= 0) {
+                document.getElementById("result").innerText = "Invalid date range.";
+                return;
+            }
+
+            let interest = (amount * (interestRate / 100) / 30) * days;
+            let totalAmount = amount + interest;
+            document.getElementById("result").innerText = `Days: ${days.toFixed(0)}\nYear: ${years.toFixed(2)}\nInterest: ${interest.toFixed(2)}\nTotal Amount: ${totalAmount.toFixed(2)}`;
+        }
+    </script>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">Back</button>
+    <div class="header">Gold Interest Calculator</div>
+    <div class="container">
+        <label for="amount">Enter Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount">
+        <br>
+        <label for="interestRate">Enter Interest Rate (%):</label>
+        <input type="number" id="interestRate" placeholder="Enter interest rate">
+        <br>
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate">
+        <br>
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate">
+        <br>
+        <button onclick="calculateInterest()">Calculate</button>
+        <h3 id="result">x</h3>
+    </div>
+</body>
+</html>
